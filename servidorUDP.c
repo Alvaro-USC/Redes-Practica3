@@ -35,11 +35,6 @@ int main(int argc, char *argv[]) {
     int receptor_fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (receptor_fd < 0) error("Error en creacion del Socket");
 
-    /*  Establecemos socket options para reusar la direccion para evitar errores en el binding 
-        al reiniciar el programa con la misma IP*/
-    int opt = 1;
-    if (setsockopt(receptor_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
-        error("Setsockopt fallo");
 
     /* Configurar address del servidor */
     struct sockaddr_in socket_propio;
