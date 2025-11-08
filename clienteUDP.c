@@ -49,13 +49,13 @@ int main(int argc, char *argv[]) {
 
     if (puerto_propio <= IPPORT_USERRESERVED || puerto_propio > 65535) {
         fprintf(stderr, "Numero de puerto_propio invalido: %s\n", argv[1]);
-        printf("Escuchando al puerto por defecto: 8000");
+        printf("Escuchando al puerto por defecto: 7000\n");
         puerto_propio = 7000;   
     }
 
     if (puerto_destino <= IPPORT_USERRESERVED || puerto_destino > 65535) {
         fprintf(stderr, "Numero de puerto_destino invalido: %s\n", argv[1]);
-        printf("Escuchando al puerto por defecto: 8000");
+        printf("Escuchando al puerto por defecto: 8000\n");
         puerto_destino = 8000;   
     }
 
