@@ -75,7 +75,15 @@ int main(int argc, char *argv[]) {
     socket_remoto.sin_family = AF_INET;
     int retIP = inet_pton(AF_INET, ip_destino, &socket_remoto2); /* Escuchar a todas las interfaces */
     socket_remoto.sin_addr.s_addr = socket_remoto2.s_addr;
-    if (retIP < 0) error("inet_pton fallo");
+    if (retIP == 0) {
+        fprintf(stderr, "Error: dirección IP destino inválida: %s\n", ip_destino);
+        close(emisor_fd);
+        exit(EXIT_FAILURE);
+    } else if (retIP < 0) {
+        perror("Error en inet_pton");
+        close(emisor_fd);
+        exit(EXIT_FAILURE);
+    }
     socket_remoto.sin_port = htons(puerto_destino); /* Traducir orden de máquina a orden de red */
 
     socklen_t tamSocketRemoto = sizeof(socket_remoto);
@@ -132,4 +140,3 @@ int main(int argc, char *argv[]) {
     close(emisor_fd);
     return 0;
 }
-
