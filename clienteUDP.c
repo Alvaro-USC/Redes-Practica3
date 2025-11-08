@@ -86,7 +86,8 @@ int main(int argc, char *argv[]) {
         error("Bind fallo");  
     }
 
-    FILE *fichero_salida = fopen(to_uppercase_filename(archivo), "w");
+    char* nombre_fichero = to_uppercase_filename(archivo);
+    FILE *fichero_salida = fopen(nombre_fichero, "w");
     if (fichero_salida == NULL) error("Error al abrir archivo de salida");
     while (fgets(mensaje, MAX_SIZE, fichero_entrada) != NULL) {
         //Se envía la línea al servidor
@@ -127,6 +128,7 @@ int main(int argc, char *argv[]) {
     /* Cerramos la conexión del socket del servidor */
     fclose(fichero_salida);
     fclose(fichero_entrada);
+    free(nombre_fichero);
     close(emisor_fd);
     return 0;
 }
