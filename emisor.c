@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (puerto_destino <= IPPORT_USERRESERVED || puerto_destino > 65535) {
-        fprintf(stderr, "Numero de puerto_destino invalido: %s\n", argv[1]);
+        fprintf(stderr, "Numero de puerto_destino invalido: %s\n", argv[3]);
         printf("Escuchando al puerto por defecto: 8000\n");
         puerto_destino = 8000;   
     }
@@ -88,3 +88,4 @@ int main(int argc, char *argv[]) {
     close(emisor_fd);
     return 0;
 }
+
