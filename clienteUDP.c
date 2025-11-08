@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
     socket_remoto.sin_port = htons(puerto_destino); /* Traducir orden de máquina a orden de red */
 
     socklen_t tamSocketRemoto = sizeof(socket_remoto);
-    ssize_t bytesEnv;
+    ssize_t bytesEnv = 0;
 
     /* Bind del socket a la address, porque cada socket tiene que tener una dirección */
     if (bind(emisor_fd, (struct sockaddr *)&socket_propio, sizeof(socket_propio)) < 0){
@@ -112,7 +112,6 @@ int main(int argc, char *argv[]) {
         }            
         //Se asegura la terminación nula del buffer
         buffer_respuesta[bytesEnv] = '\0';
-        sleep(2);
         //Se escribe la respuesta en el archivo de salida
         if (fputs(buffer_respuesta, fichero_salida) == EOF) {
             perror("Error escribiendo en archivo de salida");
