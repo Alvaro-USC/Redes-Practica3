@@ -6,7 +6,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#define MAX_SIZE 1000 * sizeof(float)
+#define MAX_SIZE 1024
 /* Función para imprimir errores */
 void error(const char *msg) {
     perror(msg);
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 
     int port = atoi(argv[1]);
 
-    float mensaje [MAX_SIZE];
+    char mensaje [MAX_SIZE];
 
     if (port <= IPPORT_USERRESERVED || port > 65535) {
         fprintf(stderr, "Numero de puerto invalido: %s\n", argv[1]);
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     /* Configurar address del servidor */
     struct sockaddr_in socket_propio;
     struct sockaddr_in socket_remoto;
-    size_t sizeMssg = MAX_SIZE;
+    size_t sizeMssg = sizeof(mensaje);
     
     socket_propio.sin_family = AF_INET;
     socket_propio.sin_addr.s_addr = INADDR_ANY; /* Escuchar a todas las interfaces */
@@ -56,17 +56,12 @@ int main(int argc, char *argv[]) {
     int remoto_port = ntohs(socket_remoto.sin_port);
     char remoto_ip[INET_ADDRSTRLEN];
 
-    int tamMens =  bytesRecv / sizeof(mensaje[0]);
-    
     printf("Bytes recibidos: %ld\n", bytesRecv);
     /* Convertimos una IP binaria en orden de red a IP legible */
     inet_ntop(AF_INET, &socket_remoto.sin_addr, remoto_ip, INET_ADDRSTRLEN);
     printf("Receptor recibió un mensaje en el puerto %d IP %s...\n", remoto_port, remoto_ip);
     printf("Mensaje recibido:\n");
-    for (int i = 0; i < tamMens; ++i) {
-        printf("Mensaje[%d]: %f\n", i, mensaje[i]);
-    }
-    printf("Número de floats: %d\n", tamMens);
+    printf("%s\n", mensaje);
 
 
     /* Cerramos la conexión del socket del servidor */
